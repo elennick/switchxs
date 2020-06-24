@@ -11,7 +11,7 @@ function _init()
   spawntimer = 0
 
   score = 0
-  powerlevel = 0
+  power = 0
 
   flipper = {}
   flipper.x = 1
@@ -72,7 +72,7 @@ function _update()
         if tile1 ~= nil and tile2 ~= nil and tile1.spr == tile2.spr then
           del(tiles, tile1)
           del(tiles, tile2)
-          score += 50
+          add_score(25)
         end
       end
     end
@@ -99,6 +99,12 @@ function _update()
 		    flipper.tslaf = 0
 		  end
 		end
+end
+
+function add_score(s) 
+  score += s
+  power += s % 20
+  power = min(power, 100)
 end
 
 function update_grid()
@@ -161,12 +167,15 @@ function _draw()
 
   //draw widgets
   print("score:", 10, 30, 3)
-  print(score, 20, 40, 6)
+  print(score, 10, 40, 6)
   
   print("next", 13, 55, 3)
   print("powerup:", 6, 62, 3)
-  spr(33, 12, 70, 2, 2)
-  print("lasers", 9, 90, 6)
+  spr(33, 12, 72, 2, 2)
+  print("lasers", 9, 92, 6)
+  
+  rect(8, 101, 32, 106)
+  rectfill(9, 102, 9 + (22 * power * .01), 105, 8)
 end
 
 __gfx__
